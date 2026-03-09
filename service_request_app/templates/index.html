@@ -44,7 +44,7 @@
 
     <div class="form-group">
         <label for="message_text">Message *</label>
-        <textarea id="message_text" name="message" required></textarea>
+        <textarea id="userMessage" name="message" required></textarea>
         <div id="messageError" class="error-message"></div>
     </div>
 
@@ -103,7 +103,7 @@ function validateForm() {
     const mobile = document.getElementById('mobile').value.trim();
     const email = document.getElementById('email').value.trim();
     const serviceType = document.getElementById('service_type').value;
-    const message = document.getElementById('message_text').value.trim();
+    const message = document.getElementById('userMessage').value.trim();
 
     if (!name) {
         document.getElementById('nameError').textContent = 'Full name is required';
@@ -159,7 +159,7 @@ document.getElementById('serviceForm').addEventListener('submit', async (e) => {
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('mobile').value.trim(),
         service_type: document.getElementById('service_type').value,
-        description: document.getElementById('message_text').value.trim()
+        description: document.getElementById('userMessage').value.trim()
     };
 
     try {
@@ -208,3 +208,4 @@ document.getElementById('mobile').addEventListener('input', function(e) {
 </script>
 
 {% endblock %}
+
