@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Service Request System{% endblock %}</title>
+
     <style>
         * {
             margin: 0;
@@ -250,26 +251,34 @@
             }
         }
     </style>
-   
+
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>📋 Service Request System</h1>
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/admin/login">Admin Login</a>
-            </div>
-        </nav>
-    </header>
 
-    <div class="container">
+<header>
+    <nav>
+        <h1>📋 Service Request System</h1>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/admin/login">Admin Login</a>
+        </div>
+    </nav>
+</header>
 
-    </div>
+<div class="container">
 
-    <footer>
-        <p>&copy; 2026 Service Request Management System</p>
-    </footer>
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Service Request Management System</p>
+</footer>
+
+{% block script %}
+{% endblock %}
 
 </body>
 </html>
+
