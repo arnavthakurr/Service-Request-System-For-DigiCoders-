@@ -1,57 +1,57 @@
+{% extends "base.html" %}
 
-<div id="header"></div>
-<script>
-  fetch('base.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header').innerHTML = data;
-    });
-</script>
+{% block title %}Service Request{% endblock %}
+
+{% block content %}
+
 <div class="form-container">
     <h2>Submit a Service Request</h2>
 
-    <div id="message"></div>
+```
+<div id="message"></div>
 
-    <form id="serviceForm">
-        <div class="form-group">
-            <label for="name">Full Name *</label>
-            <input type="text" id="name" name="name" required>
-            <div id="nameError" class="error-message"></div>
-        </div>
+<form id="serviceForm">
+    <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" required>
+        <div id="nameError" class="error-message"></div>
+    </div>
 
-        <div class="form-group">
-            <label for="mobile">Mobile Number *</label>
-            <input type="tel" id="mobile" name="mobile" required>
-            <div id="mobileError" class="error-message"></div>
-        </div>
+    <div class="form-group">
+        <label for="mobile">Mobile Number *</label>
+        <input type="tel" id="mobile" name="mobile" required>
+        <div id="mobileError" class="error-message"></div>
+    </div>
 
-        <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" required>
-            <div id="emailError" class="error-message"></div>
-        </div>
+    <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required>
+        <div id="emailError" class="error-message"></div>
+    </div>
 
-        <div class="form-group">
-            <label for="service_type">Service Type *</label>
-            <select id="service_type" name="service_type" required>
-                <option value="">-- Select a Service --</option>
-                <option value="PAN Card Apply">PAN Card Apply</option>
-                <option value="Aadhaar Update">Aadhaar Update</option>
-                <option value="Passport Apply">Passport Apply</option>
-                <option value="Online Form Filling">Online Form Filling</option>
-                <option value="Document Printing">Document Printing</option>
-            </select>
-            <div id="serviceError" class="error-message"></div>
-        </div>
+    <div class="form-group">
+        <label for="service_type">Service Type *</label>
+        <select id="service_type" name="service_type" required>
+            <option value="">-- Select a Service --</option>
+            <option value="PAN Card Apply">PAN Card Apply</option>
+            <option value="Aadhaar Update">Aadhaar Update</option>
+            <option value="Passport Apply">Passport Apply</option>
+            <option value="Online Form Filling">Online Form Filling</option>
+            <option value="Document Printing">Document Printing</option>
+        </select>
+        <div id="serviceError" class="error-message"></div>
+    </div>
 
-        <div class="form-group">
-            <label for="message">Message *</label>
-            <textarea id="message" name="message" required></textarea>
-            <div id="messageError" class="error-message"></div>
-        </div>
+    <div class="form-group">
+        <label for="message_text">Message *</label>
+        <textarea id="message_text" name="message" required></textarea>
+        <div id="messageError" class="error-message"></div>
+    </div>
 
-        <button type="submit">Submit Request</button>
-    </form>
+    <button type="submit">Submit Request</button>
+</form>
+```
+
 </div>
 
 <style>
@@ -76,74 +76,71 @@
 </style>
 
 <script>
-// Email validation function
+
+// Email validation
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-// Mobile validation function (10 digits)
+// Mobile validation
 function isValidMobile(mobile) {
     const mobileRegex = /^\d{10}$/;
     return mobileRegex.test(mobile.replace(/\s+/g, ''));
 }
 
-// Form validation function
+// Form validation
 function validateForm() {
+
     let isValid = true;
 
-    // Clear previous error messages
     document.querySelectorAll('.error-message').forEach(el => {
         el.style.display = 'none';
         el.textContent = '';
     });
 
-    // Get form values
     const name = document.getElementById('name').value.trim();
     const mobile = document.getElementById('mobile').value.trim();
     const email = document.getElementById('email').value.trim();
     const serviceType = document.getElementById('service_type').value;
-    const message = document.getElementById('message').value.trim();
+    const message = document.getElementById('message_text').value.trim();
 
-    // Validate name
     if (!name) {
         document.getElementById('nameError').textContent = 'Full name is required';
         document.getElementById('nameError').style.display = 'block';
         isValid = false;
     }
 
-    // Validate mobile
     if (!mobile) {
         document.getElementById('mobileError').textContent = 'Mobile number is required';
         document.getElementById('mobileError').style.display = 'block';
         isValid = false;
-    } else if (!isValidMobile(mobile)) {
-        document.getElementById('mobileError').textContent = 'Mobile number must be exactly 10 digits';
+    }
+    else if (!isValidMobile(mobile)) {
+        document.getElementById('mobileError').textContent = 'Mobile must be 10 digits';
         document.getElementById('mobileError').style.display = 'block';
         isValid = false;
     }
 
-    // Validate email
     if (!email) {
-        document.getElementById('emailError').textContent = 'Email address is required';
+        document.getElementById('emailError').textContent = 'Email required';
         document.getElementById('emailError').style.display = 'block';
         isValid = false;
-    } else if (!isValidEmail(email)) {
-        document.getElementById('emailError').textContent = 'Please enter a valid email address';
+    }
+    else if (!isValidEmail(email)) {
+        document.getElementById('emailError').textContent = 'Invalid email';
         document.getElementById('emailError').style.display = 'block';
         isValid = false;
     }
 
-    // Validate service type
     if (!serviceType) {
-        document.getElementById('serviceError').textContent = 'Please select a service type';
+        document.getElementById('serviceError').textContent = 'Select a service';
         document.getElementById('serviceError').style.display = 'block';
         isValid = false;
     }
 
-    // Validate message
     if (!message) {
-        document.getElementById('messageError').textContent = 'Message is required';
+        document.getElementById('messageError').textContent = 'Message required';
         document.getElementById('messageError').style.display = 'block';
         isValid = false;
     }
@@ -152,65 +149,62 @@ function validateForm() {
 }
 
 document.getElementById('serviceForm').addEventListener('submit', async (e) => {
+
     e.preventDefault();
 
-    // Validate form before submission
-    if (!validateForm()) {
-        return;
-    }
+    if (!validateForm()) return;
 
     const formData = {
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('mobile').value.trim(),
         service_type: document.getElementById('service_type').value,
-        description: document.getElementById('message').value.trim()
+        description: document.getElementById('message_text').value.trim()
     };
 
     try {
+
         const response = await fetch('/submit-request', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
         });
 
         const data = await response.json();
+
         const messageDiv = document.getElementById('message');
 
         if (data.success) {
-            messageDiv.className = 'message success';
-            messageDiv.textContent = data.message;
+            messageDiv.textContent = "Request submitted successfully!";
+            messageDiv.style.color = "green";
             document.getElementById('serviceForm').reset();
-            // Clear error messages after successful submission
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.style.display = 'none';
-            });
-            setTimeout(() => {
-                messageDiv.textContent = '';
-            }, 5000);
         } else {
-            messageDiv.className = 'message error';
             messageDiv.textContent = data.message;
+            messageDiv.style.color = "red";
         }
+
     } catch (error) {
+
         const messageDiv = document.getElementById('message');
-        messageDiv.className = 'message error';
-        messageDiv.textContent = 'An error occurred. Please try again.';
+        messageDiv.textContent = "Server error. Try again.";
+        messageDiv.style.color = "red";
+
     }
+
 });
 
-// Real-time validation for mobile number (only allow digits and limit to 10)
 document.getElementById('mobile').addEventListener('input', function(e) {
-    // Remove any non-digit characters
-    let value = e.target.value.replace(/\D/g, '');
-    // Limit to 10 digits
-    if (value.length > 10) {
-        value = value.substring(0, 10);
-    }
-    e.target.value = value;
-});
-</script>
-{% endblock %}
 
+    let value = e.target.value.replace(/\D/g, '');
+
+    if (value.length > 10) {
+        value = value.substring(0,10);
+    }
+
+    e.target.value = value;
+
+});
+
+</script>
+
+{% endblock %}
